@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="ky">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AKCHA PLUS - Демо</title>
+    <style>
+        /* Негизги стилдер */
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; background-color: #f5f6fa; color: #2f3640; }
+        .app-container { max-width: 400px; margin: 0 auto; background: #fff; min-height: 100vh; position: relative; padding-bottom: 70px; box-shadow: 0 0 20px rgba(0,0,0,0.1); }
+        
+        /* Башкы бет (Header) */
+        .header { display: flex; justify-content: space-between; align-items: center; padding: 15px; background: #fff; border-bottom: 1px solid #eee; }
+        .logo { display: flex; align-items: center; font-weight: bold; font-size: 18px; color: #2c3e50; }
+        .logo-icon { background: linear-gradient(135deg, #74b9ff, #0984e3); color: #fff; border-radius: 10px; width: 35px; height: 35px; display: flex; justify-content: center; align-items: center; margin-right: 10px; }
+        .btn-login { background: #6c5ce7; color: #fff; border: none; padding: 8px 15px; border-radius: 8px; cursor: pointer; font-weight: bold; }
+        
+        /* Негизги контент */
+        .content { padding: 15px; }
+        .card { background: #f8f9fa; border-radius: 15px; padding: 20px; margin-bottom: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        .balance-title { font-size: 14px; color: #7f8c8d; margin-bottom: 5px; }
+        .balance-amount { font-size: 32px; font-weight: bold; color: #2c3e50; }
+        .balance-amount span { font-size: 16px; color: #7f8c8d; }
+        .btn-action { width: 100%; padding: 15px; background: linear-gradient(135deg, #6c5ce7, #0984e3); color: #fff; border: none; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 15px; }
+        
+        /* Тапшырмалар */
+        .tasks-list { margin-top: 20px; }
+        .task-item { display: flex; justify-content: space-between; align-items: center; padding: 12px; background: #fff; border-radius: 10px; margin-bottom: 10px; border: 1px solid #eee; }
+        .task-btn { background: #55efc4; color: #00b894; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        
+        /* Админ панель жана Модалдык терезелер */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); justify-content: center; align-items: center; z-index: 1000; }
+        .modal-content { background: #fff; padding: 20px; border-radius: 15px; width: 85%; max-width: 350px; }
+        .modal-content h3 { margin-top: 0; text-align: center; }
+        .modal-content input { width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
+        .modal-content button { width: 100%; padding: 12px; background: #6c5ce7; color: #fff; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; margin-bottom: 5px;}
+        
+        /* Төмөнкү навигация */
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; max-width: 400px; background: #fff; display: flex; justify-content: space-around; padding: 10px 0; border-top: 1px solid #eee; z-index: 100; }
+        .nav-item { text-align: center; color: #b2bec3; font-size: 12px; cursor: pointer; }
+        .nav-item.active { color: #6c5ce7; }
+        .nav-icon { font-size: 20px; margin-bottom: 2px; }
+
+        /* Админ панелиндеги колдонуучулардын тизмеси */
+        .user-item { display: flex; justify-content: space-between; align-items: center; padding: 10px; border-bottom: 1px solid #eee; font-size: 14px;}
+        .user-item button { background: #d63031; color: #fff; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; }
+        .info-text { font-size: 12px; color: #7f8c8d; text-align: center; margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <!-- Баш жагы -->
+    <div class="header">
+        <div class="logo">
+            <div class="logo-icon">A</div>
+            AKCHA PLUS
+        </div>
+        <button class="btn-login" onclick="openAdmin()">Кирүү (Админ)</button>
+    </div>
+
+    <!-- Негизги бет -->
+    <div class="content" id="mainPage">
+        <p style="color: #7f8c8d; font-size: 14px; margin-bottom: 5px;">АКЧА PLUS / ЖЕКЕ КАБИНЕТ</p>
+        <h2 style="margin-top: 0;">Интернеттен киреше</h2>
+        <p style="color: #00b894; font-size: 14px;">● Демо система иштеп жатат</p>
+
+        <div class="card" style="background: linear-gradient(135deg, #e0eafc, #cfdef3);">
+            <div class="balance-title">СИЗДИН БАЛАНСЫҢЫЗ</div>
+            <div class="balance-amount" id="userBalance">0.00 <span>сом</span></div>
+            <button class="btn-action" onclick="openWithdraw()">Акча чыгаруу</button>
+        </div>
+
+        <div style="display: flex; gap: 10px;">
+            <div class="card" style="flex: 1; text-align: center; padding: 15px;">
+                <div style="font-size: 20px; margin-bottom: 5px;">📋</div>
+                <div style="font-size: 14px;">Тапшырмалар</div>
+            </div>
+            <div class="card" style="flex: 1; text-align: center; padding: 15px;">
+                <div style="font-size: 20px; margin-bottom: 5px;">⏱</div>
+                <div style="font-size: 14px;">Тарых</div>
+            </div>
+        </div>
+
+        <!-- Тапшырмалар бөлүмү -->
+        <div class="tasks-list">
+            <h3>Активдүү тапшырмалар</h3>
+            <div class="task-item">
+                <div>
+                    <b>Видео көрүү</b><br>
+                    <small style="color: #7f8c8d;">+2.00 сом</small>
+                </div>
+                <button class="task-btn" onclick="completeTask(2)">Аткаруу</button>
+            </div>
+            <div class="task-item">
+                <div>
+                    <b>Сурамжылоо</b><br>
+                    <small style="color: #7f8c8d;">+5.00 сом</small>
+                </div>
+                <button class="task-btn" onclick="completeTask(5)">Аткаруу</button>
+            </div>
+            <div class="task-item">
+                <div>
+                    <b>Сайтка кирүү</b><br>
+                    <small style="color: #7f8c8d;">+1.50 сом</small>
+                </div>
+                <button class="task-btn" onclick="completeTask(1.5)">Аткаруу</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Админ панели (Жашыруун) -->
+    <div class="content" id="adminPage" style="display: none;">
+        <h2>Админ Панель</h2>
+        <p style="color: #d63031;">Бул жерде сиз колдонуучуларды башкара аласыз.</p>
+        
+        <div class="card">
+            <h3>Жалпы система</h3>
+            <p>Пайдалануучулар: <b id="totalUsers">1</b></p>
+            <p>Жалпы баланс: <b id="totalBalance">0.00</b> сом</p>
+            <p style="color: #00b894; font-weight: bold;">Сиздин пайдаңыз (10%): <span id="adminProfit">0.00</span> сом</p>
+        </div>
+
+        <div class="card">
+            <h3>Акыркы чыгаруулар</h3>
+            <div id="userList" style="max-height: 200px; overflow-y: auto;">
+                <!-- Колдонуучулар бул жерге чыгат -->
+                <p style="color:#b2bec3; text-align:center;">Азырынча чыгаруулар жок</p>
+            </div>
+        </div>
+        
+        <button class="btn-action" style="background: #b2bec3;" onclick="closeAdmin()">Артка (Башкы бет)</button>
+    </div>
+
+    <!-- Төмөнкү навигация -->
+    <div class="bottom-nav">
+        <div class="nav-item active" onclick="showMain()">
+            <div class="nav-icon">🏠</div>
+            Башкы бет
+        </div>
+        <div class="nav-item">
+            <div class="nav-icon">📋</div>
+            Тапшырма
+        </div>
+        <div class="nav-item">
+            <div class="nav-icon">👤</div>
+            Профиль
+        </div>
+    </div>
+</div>
+
+<!-- Модалдык терезе: Акча чыгаруу (MBank номери менен) -->
+<div class="modal" id="withdrawModal">
+    <div class="modal-content">
+        <h3>Акча чыгаруу</h3>
+        <p class="info-text">Акча төмөнкү MBank номериңизге түшөт. (Система 10% комиссия кармап калат)</p>
+        
+        <label style="font-size: 12px; color: #7f8c8d;">MBank номериңиз:</label>
+        <input type="tel" id="mbankNumber" value="+996 556 652 652" placeholder="+996 XXX XXX XXX">
+        
+        <label style="font-size: 12px; color: #7f8c8d;">Сумма (сом):</label>
+        <input type="number" id="withdrawAmount" placeholder="Мисалы: 100">
+        
+        <button onclick="processWithdraw()">Тастыктоо жана алуу</button>
+        <button style="background: #b2bec3;" onclick="closeWithdraw()">Жокко чыгаруу</button>
+    </div>
+</div>
+
+<!-- Модалдык терезе: Админ кирүү -->
+<div class="modal" id="adminLoginModal">
+    <div class="modal-content">
+        <h3>Админ Кирүү</h3>
+        <input type="password" id="adminPass" placeholder="Паролду киргизиңиз">
+        <button onclick="checkAdminPass()">Кирүү</button>
+        <button style="background: #b2bec3; margin-top: 10px;" onclick="closeAdminLogin()">Жокко чыгаруу</button>
+    </div>
+</div>
+
+<script>
+    // === СИСТЕМАЛЫК ӨЗГӨРМӨЛӨР ===
+    let currentBalance = 0.00;
+    let adminPassword = "admin123"; // Админдин паролу ушул жерден өзгөртүлөт!
+    let adminProfit = 0.00; // Сиздин пайдаңыз
+    let withdrawHistory = []; // Чыгаруулардын тарыхы
+
+    // === НЕГИЗГИ ФУНКЦИЯЛАР ===
+    
+    // Балансты жаңыртуу
+    function updateBalanceUI() {
+        document.getElementById('userBalance').innerHTML = currentBalance.toFixed(2) + ' <span>сом</span>';
+        document.getElementById('totalBalance').innerText = currentBalance.toFixed(2);
+        document.getElementById('adminProfit').innerText = adminProfit.toFixed(2);
+
+        // Админ үчүн тарыхты көрсөтүү
+        let historyHtml = '';
+        if(withdrawHistory.length === 0) {
+            historyHtml = '<p style="color:#b2bec3; text-align:center;">Азырынча чыгаруулар жок</p>';
+        } else {
+            withdrawHistory.forEach(item => {
+                historyHtml += `
+                    <div class="user-item">
+                        <span>${item.number}<br><small style="color:#7f8c8d;">${item.date}</small></span>
+                        <span style="color:#d63031; font-weight:bold;">-${item.amount} сом</span>
+                    </div>
+                `;
+            });
+        }
+        document.getElementById('userList').innerHTML = historyHtml;
+    }
+
+    // Тапшырма аткаруу (Акча кошуу)
+    function completeTask(amount) {
+        currentBalance += amount;
+        updateBalanceUI();
+        alert("Тапшырма аткарылды! +" + amount + " сом кошулду.");
+    }
+
+    // === АКЧА ЧЫГАРУУ ЛОГИКАСЫ ===
+    function openWithdraw() {
+        document.getElementById('withdrawModal').style.display = 'flex';
+    }
+
+    function closeWithdraw() {
+        document.getElementById('withdrawModal').style.display = 'none';
+        document.getElementById('withdrawAmount').value = '';
+    }
+
+    function processWithdraw() {
+        let mbankNum = document.getElementById('mbankNumber').value.trim();
+        let amount = parseFloat(document.getElementById('withdrawAmount').value);
+        
+        // Номерди текшерүү
+        if (mbankNum === "" || mbankNum.length < 9) {
+            alert("Сураныч, туура MBank номерин киргизиңиз!");
+            return;
+        }
+        // Сумманы текшерүү
+        if (isNaN(amount) || amount <= 0) {
+            alert("Туура сумма киргизиңиз!");
+            return;
+        }
+        if (amount > currentBalance) {
+            alert("Балансыңызда жетиштүү акча жок!");
+            return;
+        }
+
+        // Пайданы эсептөө (10%)
+        let commission = amount * 0.10; 
+        let userGets = amount - commission;
+
+        // Балансты жаңыртуу
+        currentBalance -= amount;
+        adminProfit += commission;
+        
+        // Тарыхка жазуу
+        let now = new Date();
+        let timeString = now.getHours() + ":" + now.getMinutes() + " | " + now.getDate() + "-ай";
+        withdrawHistory.unshift({
+            number: mbankNum,
+            amount: amount,
+            date: timeString
+        });
+
+        // UI жаңыртуу жана жабуу
+        updateBalanceUI();
+        closeWithdraw();
+
+        // Колдонуучуга ийгилик тууралуу кабарлоо
+        alert(`✅ АКЧА ЧЫГАРУУ ИЙГИЛИКТҮҮ!\n\nСумма: ${amount} сом\nКомиссия (10%): ${commission.toFixed(2)} сом\n\n${userGets.toFixed(2)} сом төмөнкү MBank номериңизге жөнөтүлдү:\n${mbankNum}\n\n(Бул демо болгондуктан реалдуу акча түшпөйт)`);
+    }
+
+    // === АДМИН ПАНЕЛЬ ЛОГИКАСЫ ===
+    function openAdmin() {
+        document.getElementById('adminLoginModal').style.display = 'flex';
+    }
+
+    function closeAdminLogin() {
+        document.getElementById('adminLoginModal').style.display = 'none';
+        document.getElementById('adminPass').value = '';
+    }
+
+    function checkAdminPass() {
+        let pass = document.getElementById('adminPass').value;
+        if (pass === adminPassword) {
+            closeAdminLogin();
+            document.getElementById('mainPage').style.display = 'none';
+            document.getElementById('adminPage').style.display = 'block';
+            updateBalanceUI(); 
+        } else {
+            alert("Пароль туура эмес!");
+        }
+    }
+
+    function closeAdmin() {
+        document.getElementById('adminPage').style.display = 'none';
+        document.getElementById('mainPage').style.display = 'block';
+        showMain();
+    }
+
+    function showMain() {
+        document.getElementById('mainPage').style.display = 'block';
+        document.getElementById('adminPage').style.display = 'none';
+    }
+
+    // Баштоо
+    updateBalanceUI();
+
+</script>
+
+</body>
+</html>
