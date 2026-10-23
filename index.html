@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="ky">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KG Tech Solutions | Профессионалдуу IT Кызматтар</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --primary: #3b82f6;
+            --primary-hover: #2563eb;
+            --card-bg: #1e293b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        /* Навигация */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 5%;
+            background-color: rgba(15, 23, 42, 0.9);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--text-main);
+            text-decoration: none;
+        }
+        .logo span { color: var(--primary); }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 400;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover { color: var(--primary); }
+
+        .btn-nav {
+            background: var(--primary);
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+        .btn-nav:hover { background: var(--primary-hover); }
+
+        /* Башкы бет */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0 5%;
+            background: radial-gradient(circle at top, #1e293b 0%, #0f172a 100%);
+        }
+
+        .hero-content h1 {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        .hero-content h1 span { color: var(--primary); }
+
+        .hero-content p {
+            font-size: 18px;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 30px auto;
+        }
+
+        .btn-main {
+            display: inline-block;
+            background: var(--primary);
+            color: #fff;
+            padding: 15px 35px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 600;
+            transition: 0.3s;
+            border: 2px solid transparent;
+        }
+        .btn-main:hover {
+            background: transparent;
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        /* Кызматтар */
+        .services {
+            padding: 100px 5%;
+            background: var(--bg-color);
+        }
+        .section-title {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 60px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 40px 30px;
+            border-radius: 16px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.1);
+            border-color: rgba(59, 130, 246, 0.3);
+        }
+
+        .card-icon {
+            font-size: 40px;
+            margin-bottom: 20px;
+        }
+        .card h3 {
+            font-size: 22px;
+            margin-bottom: 15px;
+        }
+        .card p {
+            color: var(--text-muted);
+            font-size: 15px;
+        }
+
+        /* Байланыш */
+        .contact {
+            padding: 100px 5%;
+            text-align: center;
+            background: var(--card-bg);
+        }
+        .contact p {
+            color: var(--text-muted);
+            margin-bottom: 30px;
+            font-size: 18px;
+        }
+
+        /* Футер */
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: var(--text-muted);
+            font-size: 14px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        /* Мобилдик версия */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hero-content h1 { font-size: 32px; }
+            .btn-nav { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Навигация -->
+    <nav>
+        <a href="#" class="logo">KG<span>Tech</span></a>
+        <div class="nav-links">
+            <a href="#home">Башкы бет</a>
+            <a href="#services">Кызматтар</a>
+            <a href="#contact">Байланыш</a>
+        </div>
+        <a href="#contact" class="btn-nav">Долбоорду баштоо</a>
+    </nav>
+
+    <!-- Башкы бет -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Бизнес үчүн <span>Заманбап</span> IT Чечимдер</h1>
+            <p>Сайттарды иштеп чыгуу, мобилдик тиркемелер, автоматташтыруу жана IT консалтинг. Биз сиздин бизнесиңизди санариптик дүйнөгө алып чыгабыз.</p>
+            <a href="#contact" class="btn-main">Акысыз консультация алуу</a>
+        </div>
+    </section>
+
+    <!-- Кызматтар -->
+    <section class="services" id="services">
+        <h2 class="section-title">Биздин Кызматтар</h2>
+        <div class="grid">
+            <div class="card">
+                <div class="card-icon">💻</div>
+                <h3>Веб-сайттарды түзүү</h3>
+                <p>Интернет-дүкөндөр, корпоративдик сайттар жана веб-порталдар. Заманбап технологиялар менен тез жана коопсуз жасалат.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">📱</div>
+                <h3>Мобилдик тиркемелер</h3>
+                <p>iOS жана Android үчүн тиркемелер. Сиздин кардарларыңыз дайыма сиз менен байланышта болот.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">⚙️</div>
+                <h3>Бизнести автоматташтыруу</h3>
+                <p>Кагаз иштерин азайтып, эсеп-кысапты жана кампаны башкаруучу программаларды иштеп чыгабыз.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">📈</div>
+                <h3>SEO жана Маркетинг</h3>
+                <p>Сайтыңызды Google'дун биринчи баракчасына чыгарып, кардарлардын агымын көбөйтөбүз.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Байланыш -->
+    <section class="contact" id="contact">
+        <h2 class="section-title">Долбооруңузду талкулайлы</h2>
+        <p>Биз менен байланышып, идеяңызды ишке ашырыңыз. Баасы жана мөөнөтү боюнча акысыз кеңеш беребиз.</p>
+        
+        <!-- БУЛ ЖЕРГЕ ӨЗҮҢҮЗДҮН WHATSAPP НОМЕРИҢИЗДИ ЖАЗЫҢЫЗ -->
+        <a href="https://wa.me/996556652652?text=Саламатсызбы!%20Сайт%20боюнча%20кеңеш%20алгым%20келет." class="btn-main" target="_blank">
+            WhatsApp аркылуу жазуу
+        </a>
+        <br><br>
+        <!-- ЖЕ ТЕЛЕГРАМ -->
+        <a href="https://t.me/сиздин_логин" class="btn-nav" style="background: #2AABEE;" target="_blank">
+            Telegram аркылуу жазуу
+        </a>
+    </section>
+
+    <!-- Футер -->
+    <footer>
+        <p>&copy; 2024 KG Tech Solutions. Бардык укуктар корголгон.</p>
+        <p style="margin-top: 10px; font-size: 12px;">Бишкек ш. | +996 556 652 652 | info@kgtech.kg</p>
+    </footer>
+
+</body>
+</html>
